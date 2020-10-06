@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+appdirs = "*"
+argcomplete = "*"
+colorama = "*"
+hjson = "*"
+"nose2" = "*"
+"flake8" = "*"
+"pep8-naming" = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
