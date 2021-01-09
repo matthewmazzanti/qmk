@@ -47,14 +47,14 @@ _______, _______, _______, _______, _______, _______, _______, _______,    _____
 
 _______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, _______, _______,
 _______, KC_QUOT, KC_LT,   KC_LPRN, KC_LCBR, KC_LBRC,                                        KC_RBRC, KC_RCBR, KC_RPRN, KC_GT,   KC_DQUO, _______,
-_______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    _______, _______, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
+_______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    KC_PGUP, KC_PGDN, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
                            _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
 
 ), [NUM] = LAYOUT(
 
 _______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, _______, _______,
 _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-_______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    _______, _______, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
+_______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    KC_NLCK, _______, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
                            _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
 
 ), [ETC] = LAYOUT (
