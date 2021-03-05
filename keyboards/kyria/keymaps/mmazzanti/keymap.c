@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include <raw_hid.h>
 
 enum layers {
 	QWE=0,
@@ -45,14 +46,14 @@ _______, _______, _______, _______, _______, _______, _______, _______,    _____
 
 ), [SYM] = LAYOUT(
 
-_______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, _______, _______,
+_______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, KC_QUES, _______,
 _______, KC_QUOT, KC_LT,   KC_LPRN, KC_LCBR, KC_LBRC,                                        KC_RBRC, KC_RCBR, KC_RPRN, KC_GT,   KC_DQUO, _______,
 _______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    KC_PGUP, KC_PGDN, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
                            _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
 
 ), [NUM] = LAYOUT(
 
-_______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, _______, _______,
+_______, KC_GRV,  KC_PERC, KC_AT,   KC_HASH, KC_CIRC,                                        KC_DLR,  KC_UNDS, KC_PMNS, KC_PPLS, KC_QUES, _______,
 _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                           KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
 _______, KC_BSLS, KC_TILD, KC_PSLS, KC_PAST, KC_PIPE, _______, _______,    KC_NLCK, _______, KC_AMPR, KC_EXLM, KC_COMM, KC_DOT,  KC_EQL,  _______,
                            _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______
@@ -69,19 +70,19 @@ _______, KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,  _______, _______,    _____
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
-		case MK_ENCR:
-			if (record->event.pressed) {
-				if (encoder_right == NOOP) {
-					encoder_right = MAP_BASE;
-				} else if (encoder_right == MAP_BASE) {
-					encoder_right = MAP_MODS;
-				} else {
-					encoder_right = NOOP;
-				}
+	case MK_ENCR:
+		if (record->event.pressed) {
+			if (encoder_right == NOOP) {
+				encoder_right = MAP_BASE;
+			} else if (encoder_right == MAP_BASE) {
+				encoder_right = MAP_MODS;
+			} else {
+				encoder_right = NOOP;
 			}
-			return false;
-		default:
-			return true;
+		}
+		return false;
+	default:
+		return true;
 	}
 }
 
@@ -108,7 +109,8 @@ static void render_qmk_logo(void) {
   static const char PROGMEM qmk_logo[] = {
     0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-    0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
+    0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
+  };
 
   oled_write_P(qmk_logo, false);
 }
@@ -119,23 +121,23 @@ static void render_status(void) {
 
 	// Host Keyboard Layer Status
 	switch (get_highest_layer(layer_state)) {
-		case SYM:
-			oled_write_P(PSTR("SYMBOL "), false);
-			break;
-		case NUM:
-			oled_write_P(PSTR("NUMBER "), false);
-			break;
-		case ETC:
-			oled_write_P(PSTR("ETC    "), false);
-			break;
-		default:
-			// Sym, Num, Etc all take precedence
-			if (layer_state_is(DVK)) {
-				oled_write_P(PSTR("DVORAK "), false);
-			} else {
-				oled_write_P(PSTR("QWERTY "), false);
-			}
-			break;
+	case SYM:
+		oled_write_P(PSTR("SYMBOL "), false);
+		break;
+	case NUM:
+		oled_write_P(PSTR("NUMBER "), false);
+		break;
+	case ETC:
+		oled_write_P(PSTR("ETC    "), false);
+		break;
+	default:
+		// Sym, Num, Etc all take precedence
+		if (layer_state_is(DVK)) {
+			oled_write_P(PSTR("DVORAK "), false);
+		} else {
+			oled_write_P(PSTR("QWERTY "), false);
+		}
+		break;
 	}
 
 	if (layer_state_is(GAM)) {
@@ -145,17 +147,17 @@ static void render_status(void) {
 	}
 
 	switch (encoder_right) {
-		case NOOP:
-			oled_write_P(PSTR("       \n"), false);
-			break;
-		case MAP_BASE:
-			oled_write_P(PSTR("MAP BASE\n"), false);
-			break;
-		case MAP_MODS:
-			oled_write_P(PSTR("MAP MODS\n"), false);
-			break;
-		default:
-			oled_write_P(PSTR("Undefined\n"), false);
+	case NOOP:
+		oled_write_P(PSTR("       \n"), false);
+		break;
+	case MAP_BASE:
+		oled_write_P(PSTR("MAP BASE\n"), false);
+		break;
+	case MAP_MODS:
+		oled_write_P(PSTR("MAP MODS\n"), false);
+		break;
+	default:
+		oled_write_P(PSTR("Undefined\n"), false);
 	}
 }
 
@@ -171,27 +173,65 @@ void oled_task_user(void) {
 #ifdef ENCODER_ENABLE
 void encoder_update_user(uint8_t index, bool clockwise) {
 	if (index == 0) {
-                if (clockwise) {
-                    tap_code16(KC_LEFT);
-                } else {
-                    tap_code16(KC_RGHT);
-                }
+		if (clockwise) {
+			tap_code16(KC_LEFT);
+		} else {
+			tap_code16(KC_RGHT);
+		}
 	} else if (index == 1) {
 		switch (encoder_right) {
-			case MAP_BASE:
-				layer_invert(DVK);
-				break;
-			case MAP_MODS:
-				layer_invert(GAM);
-				break;
-			default:
-				if (clockwise) {
-				    tap_code16(KC_UP);
-				} else {
-				    tap_code16(KC_DOWN);
-				}
-				break;
+		case MAP_BASE:
+			layer_invert(DVK);
+			break;
+		case MAP_MODS:
+			layer_invert(GAM);
+			break;
+		default:
+			if (clockwise) {
+			    tap_code16(KC_UP);
+			} else {
+			    tap_code16(KC_DOWN);
+			}
+			break;
 		}
 	}
+
+#ifdef RAW_ENABLE
+	uint8_t data[] = {5,4,3,2,1};
+	raw_hid_send(data, 32);
+#endif
+}
+#endif
+
+#ifdef RAW_ENABLE
+bool layer_enter_state(layer_state_t state, uint8_t layer) {
+	return !layer_state_is(layer) && layer_state_cmp(state, layer);
+}
+
+bool layer_leave_state(layer_state_t state, uint8_t layer) {
+	return layer_state_is(layer) && !layer_state_cmp(state, layer);
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+	// A bit ham fisted, but works to tell whether dvorak is turned off/on
+	// without triggering on other layer state changes
+	if (layer_enter_state(state, DVK)) {
+		xprintf("switch to dvorak\n");
+		uint8_t* data = (uint8_t*) " dvorak";
+		data[0] = 6;
+		raw_hid_send(data, 32);
+	} else if (layer_leave_state(state, DVK)) {
+		xprintf("switch to qwerty\n");
+		uint8_t* data = (uint8_t*) " qwerty";
+		data[0] = 6;
+		raw_hid_send(data, 32);
+	}
+
+	return state;
+}
+
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+	xprintf("got data, len: %d", length);
+	raw_hid_send(data, length);
 }
 #endif
