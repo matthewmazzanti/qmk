@@ -38,12 +38,30 @@ let
     doCheck = false;
   };
 
+  dotty-dict = with pkgs.python3Packages; buildPythonPackage rec {
+    pname = "dotty_dict";
+    version = "1.3.0";
+
+    src = fetchPypi {
+      inherit pname version;
+      sha256 = "1w5sgkp33lyaxb9rr8bp8p1x3awl3qpz9wb8g8wq9kcycaika07b";
+    };
+
+    propagatedBuildInputs = [
+      setuptools_scm
+    ];
+
+    doCheck = false;
+  };
+
   pythonEnv = pkgs.python3.withPackages (p: with p; [
     # requirements.txt
     appdirs
     argcomplete
     colorama
+    dotty-dict
     hjson
+    jsonschema
     milc
     pygments
     # requirements-dev.txt
